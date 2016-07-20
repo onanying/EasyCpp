@@ -3,20 +3,20 @@ EasyCpp
 一个用于网络开发的C++ 敏捷开发框架，大量按网络开发业务需求封装的辅助函数、类、模型
     
 
-#### 依赖库
+#### 依赖库 (libraries)
 
     all                       boost库
     models/redis.hpp          hiredis库 & libevent库
     
-#### 安装
+#### 安装 (install)
 
     unzip easycpp
     cd easycpp
     ./install.sh
     
-#### 使用范例
+#### 使用范例 (sample)
 
-```
+```cpp
 #include <easycpp/helpers/json.hpp>
 using namespace easycpp;
 using namespace std;
@@ -28,7 +28,7 @@ cout << uid << endl;
 ```
 
 
-#### 头文件列表
+#### 头文件列表 (files)
 
     easycpp/helpers/datatime.hpp
     easycpp/helpers/file.hpp
