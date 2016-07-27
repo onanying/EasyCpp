@@ -12,9 +12,13 @@
 #include <string>
 
 #include <boost/asio.hpp>
+#include <boost/foreach.hpp>
 
 #include <easycpp/helpers/json.hpp>
 #include <easycpp/helpers/type.hpp>
+#include <easycpp/helpers/string.hpp>
+
+const std::string HTTP_BUILD_KEYS_ALL = "HTTP_BUILD_KEYS_ALL";
 
 namespace easycpp {
 namespace helpers {
@@ -65,7 +69,7 @@ namespace helpers {
     }
 
     /// POST请求(重载)
-    int http_post(std::string url, const std::string& form_data, std::string& reponse_data, int timeout = 30)
+    int http_post(std::string url, const std::string& form_data, std::string& reponse_data, const int timeout = 30)
     {
         // 去掉url中的协议头
         if (url.find("http://") != std::string::npos) {
@@ -100,7 +104,7 @@ namespace helpers {
     }
 
     /// GET请求
-    int http_get(const std::string& host, const std::string& port, const std::string& page, std::string& reponse_data, int timeout = 30)
+    int http_get(const std::string& host, const std::string& port, const std::string& page, std::string& reponse_data, const int timeout = 30)
     {
         try {
             boost::asio::ip::tcp::iostream stream;
@@ -142,7 +146,7 @@ namespace helpers {
     }
 
     /// GET请求(重载)
-    int http_get(std::string url, std::string& reponse_data, int timeout = 30)
+    int http_get(std::string url, std::string& reponse_data, const int timeout = 30)
     {
         // 去掉url中的协议头
         if (url.find("http://") != std::string::npos) {
@@ -177,15 +181,25 @@ namespace helpers {
     }
 
     /// 生成http请求字符串
-    std::string http_build_query(easycpp::libraries::JsonObject &json_obj)
+    std::string http_build_query(easycpp::libraries::JsonObject &json_obj, const std::string keys = HTTP_BUILD_KEYS_ALL)
     {
         std::string query_str;
-        BOOST_FOREACH(easycpp::libraries::JsonValue &v, json_obj) {
+        std::vector<std::string> keys_array;
+        helpers::explode(",", keys, keys_array);
+        BOOST_FOREACH (easycpp::libraries::JsonValue &v, json_obj) {
             std::string key = v.first;            
             std::string val = easycpp::helpers::json_get_string(json_obj, key);
-            query_str += "&" + key + "=" + val;
+            if (keys == HTTP_BUILD_KEYS_ALL) {
+                query_str += ("&" + key + "=" + val);
+            } else {
+                BOOST_FOREACH (std::string &keys_v, keys_array) {
+                    if(key == keys_v){
+                        query_str += ("&" + key + "=" + val);
+                    }
+                }
+            }
         }
-        return query_str.substr(1, query_str.size());
+        return query_str.empty() ? query_str : query_str.substr(1, query_str.size());
     }
 
 }
