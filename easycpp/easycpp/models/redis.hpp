@@ -12,9 +12,9 @@
 
 #include <hiredis/hiredis.h>
 
-#include <easycpp/helpers/string.hpp>
-#include <easycpp/helpers/type.hpp>
-#include <easycpp/libraries/exception.hpp>
+#include <easycpp/helpers/string.h>
+#include <easycpp/helpers/type.h>
+#include <easycpp/libraries/exception.h>
 
 namespace easycpp {
 namespace models {
@@ -256,7 +256,7 @@ namespace models {
             if(timeout == 0){
                 cmd = "RPOP " + key;
             }else{
-                cmd = "BRPOP " + key + " " + easycpp::helpers::c_str(timeout);
+                cmd = "BRPOP " + key + " " + easycpp::helpers::strval(timeout);
             }
             redisReply* reply = (redisReply*)redisCommand(conn, cmd.c_str());
             // 重要错误, redis需重新连接
@@ -291,7 +291,7 @@ namespace models {
                 return false;
             }
             // 设置
-            std::string cmd = "EXPIRE " + key + " " + easycpp::helpers::c_str(expire);
+            std::string cmd = "EXPIRE " + key + " " + easycpp::helpers::strval(expire);
             redisReply* reply = (redisReply*)redisCommand(conn, cmd.c_str());
             // 重要错误, redis需重新连接
             if(reply == NULL){

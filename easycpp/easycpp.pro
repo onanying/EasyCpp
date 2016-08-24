@@ -12,23 +12,33 @@ TARGET = easycpp
 CONFIG   += console
 CONFIG   -= app_bundle
 
-TEMPLATE = app
+TEMPLATE = lib
 
 
-SOURCES += main.cpp
+SOURCES += \
+    main.cpp \
+    easycpp/helpers/string.cpp \    
+    easycpp/helpers/datetime.cpp \
+    easycpp/helpers/file.cpp \
+    easycpp/helpers/log.cpp \
+    easycpp/helpers/type.cpp \
+    easycpp/helpers/json.cpp \
+    easycpp/libraries/exception.cpp \
+    easycpp/models/redis.cpp \    
+    easycpp/helpers/http.cpp
 
 
 INCLUDEPATH += /usr/local/include/
-LIBS += -lboost_system -lhiredis -levent -lssl -lcrypto
+LIBS += -lboost_system -lhiredis -levent
 
 HEADERS += \
-    easycpp/helpers/type.hpp \
-    easycpp/helpers/string.hpp \
-    easycpp/helpers/log.hpp \
-    easycpp/helpers/json.hpp \
-    easycpp/helpers/http.hpp \
-    easycpp/helpers/file.hpp \
-    easycpp/helpers/datetime.hpp \
-    easycpp/libraries/json.hpp \
-    easycpp/libraries/exception.hpp \
-    easycpp/models/redis.hpp
+    easycpp/helpers/string.h \
+    easycpp/helpers/datetime.h \
+    easycpp/helpers/file.h \
+    easycpp/helpers/log.h \
+    easycpp/helpers/type.h \
+    easycpp/helpers/json.h \
+    easycpp/libraries/json.h \
+    easycpp/libraries/exception.h \
+    easycpp/models/redis.h \
+    easycpp/helpers/http.h
