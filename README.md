@@ -288,7 +288,7 @@ int main()
         // 连接redis
         models::RedisModel redis("127.0.0.1", 6379, "123456");
 
-	/* string类型 */
+        /* string类型 */
         // 设置string
         redis.setString("token", "b12cc6c0cc5b4875af4b1334ceac782b10");
         // 设置string (带有效期)
@@ -297,7 +297,7 @@ int main()
         string s1 = redis.getString("token");
         cout << "token: " << s1 << endl;
 
-	/* Hash类型 */
+        /* Hash类型 */
         // 赋值
         map<string, string> array;
         array["name"] = "xiaohua";
@@ -313,7 +313,7 @@ int main()
             cout << "array val: " << it->second << endl;
         }
 
-	/* List类型 */
+        /* List类型 */
         // 插入列表头部
         redis.pushList("queue_user", "update_xiaohua_info");
         redis.pushList("queue_user", "insert_xiaohua_info");
