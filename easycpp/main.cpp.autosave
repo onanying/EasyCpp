@@ -16,7 +16,6 @@ using namespace std;
 
 int main()
 {
-    /*  */
     // 构建要post的数据
     libraries::JsonObject form_data;
     try{

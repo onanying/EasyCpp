@@ -36,22 +36,19 @@ namespace models {
         bool setString(std::string key, std::string text, int expire = -1);
 
         /// 获取数组
-        std::map<std::string, std::string>* getArray(std::string key);
+        std::map<std::string, std::string>* getHash(std::string key);
 
         /// 设置数组(带有效期)
-        bool setArray(std::string key, std::map<std::string, std::string> &array, int expire = -1);
-
-        /// 获取表格的一行数据
-        std::map<std::string, std::string>* getTableRow(std::string table, std::string id);
-
-        /// 设置表格的一行数据(带有效期)
-        bool setTableRow(std::string table, std::string id, std::map<std::string, std::string> &array, int expire = -1);
+        bool setHash(std::string key, std::map<std::string, std::string> &array, int expire = -1);
 
         /// 往列表头部插入一条数据
         bool pushList(std::string key, std::string text);
 
         /// 从列表尾部拉取一条数据(带堵塞超时)
         std::string pullList(std::string key, int timeout = -1);
+
+        /// 设置有效时间
+        bool setExpire(std::string key, int expire);
 
     private:
         redisContext* conn;
@@ -60,9 +57,6 @@ namespace models {
 
         /// 关闭连接
         void closeConn();
-
-        /// 设置有效时间
-        bool setExpire(std::string key, int expire);
     };
 
 }

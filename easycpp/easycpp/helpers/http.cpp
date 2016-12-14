@@ -5,14 +5,13 @@
 
 #include <easycpp/helpers/http.h>
 
-const std::string HTTP_BUILD_ALL_KEYS = "HTTP_BUILD_ALL_KEYS";
-
 namespace easycpp {
 namespace helpers {
 
     /// POST请求
-    int http_post(const std::string& host, const std::string& port, const std::string& page, const std::string& form_data, std::string& reponse_data, int timeout)
+    int http_post(const std::string& host, const std::string& port, const std::string& page, easycpp::libraries::JsonObject& form_data, std::string& reponse_data, int timeout)
     {
+        std::string query_data = http_build_query(form_data); // 生成http请求字符串
         try {
             boost::asio::ip::tcp::iostream stream;
             stream.expires_from_now(boost::posix_time::seconds(timeout));
@@ -20,10 +19,10 @@ namespace helpers {
             stream << "POST " << page << " HTTP/1.0\r\n";
             stream << "Host: " << host << ":" << port << "\r\n";
             stream << "Accept: */*\r\n";
-            stream << "Content-Length: " << form_data.length() << "\r\n";
+            stream << "Content-Length: " << query_data.length() << "\r\n";
             stream << "Content-Type: application/x-www-form-urlencoded\r\n";
             stream << "Connection: close\r\n\r\n";
-            stream << form_data;
+            stream << query_data;
             stream.flush();
 
             std::string status_code;
@@ -56,7 +55,7 @@ namespace helpers {
     }
 
     /// POST请求(重载)
-    int http_post(std::string url, const std::string& form_data, std::string& reponse_data, const int timeout)
+    int http_post(std::string url, easycpp::libraries::JsonObject& form_data, std::string& reponse_data, const int timeout)
     {
         // 去掉url中的协议头
         if (url.find("http://") != std::string::npos) {
@@ -236,23 +235,14 @@ namespace helpers {
     }
 
     /// 生成http请求字符串
-    std::string http_build_query(easycpp::libraries::JsonObject &query_data, const std::string filter)
+    std::string http_build_query(easycpp::libraries::JsonObject &query_data)
     {
         std::string query_str;
-        std::vector<std::string> keys_array = helpers::explode(",", filter);
         BOOST_FOREACH (easycpp::libraries::JsonValue &v, query_data) {
             std::string key = v.first;            
             std::string val = easycpp::helpers::json_get_string(query_data, key);
             val = urlencode(val);
-            if (filter == HTTP_BUILD_ALL_KEYS) {
-                query_str += ("&" + key + "=" + val);
-            } else {
-                BOOST_FOREACH (std::string &keys_v, keys_array) {
-                    if(key == keys_v){
-                        query_str += ("&" + key + "=" + val);
-                    }
-                }
-            }
+            query_str += ("&" + key + "=" + val);
         }
         return query_str.empty() ? query_str : query_str.substr(1, query_str.size());
     }

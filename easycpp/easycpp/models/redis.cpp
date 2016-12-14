@@ -72,13 +72,15 @@ bool easycpp::models::RedisModel::setString(std::string key, std::string text, i
         return false;
     }
     // 设置有效时间(秒)
-    setExpire(key, expire);
+    if(expire > -1){
+        setExpire(key, expire);
+    }
     // 返回状态
     return true;
 }
 
 /// 获取数组
-std::map<std::string, std::string>* easycpp::models::RedisModel::getArray(std::string key)
+std::map<std::string, std::string>* easycpp::models::RedisModel::getHash(std::string key)
 {
     key = "array:" + key;
     std::string cmd = "HGETALL " + key;
@@ -104,7 +106,7 @@ std::map<std::string, std::string>* easycpp::models::RedisModel::getArray(std::s
 }
 
 /// 设置数组(带有效期)
-bool easycpp::models::RedisModel::setArray(std::string key, std::map<std::string, std::string> &array, int expire)
+bool easycpp::models::RedisModel::setHash(std::string key, std::map<std::string, std::string> &array, int expire)
 {
     // 设置数据
     key = "array:" + key;
@@ -127,62 +129,9 @@ bool easycpp::models::RedisModel::setArray(std::string key, std::map<std::string
         return false;
     }
     // 设置有效时间(秒)
-    setExpire(key, expire);
-    // 返回状态
-    return true;
-}
-
-/// 获取表格的一行数据
-std::map<std::string, std::string>* easycpp::models::RedisModel::getTableRow(std::string table, std::string id)
-{
-    std::string key = table + ":" + id;
-    std::string cmd = "HGETALL " + key;
-    redisReply* reply = (redisReply*)redisCommand(conn, cmd.c_str());
-    // 重要错误, redis需重新连接
-    if(reply == NULL){
-        throw easycpp::libraries::Exception("redis cmd failed, please connect again; ");
+    if(expire > -1){
+        setExpire(key, expire);
     }
-    array.clear(); // 清除之前的数据
-    if (reply->type == REDIS_REPLY_ARRAY) {
-        std::string key, val;
-        for (size_t i = 0; i < reply->elements; i++) {
-            if(i % 2 == 0){
-                key = reply->element[i]->str;
-            }else{
-                val = reply->element[i]->str;
-                array[key] = val;
-            }
-        }
-    }
-    freeReplyObject(reply);
-    return &array;
-}
-
-/// 设置表格的一行数据(带有效期)
-bool easycpp::models::RedisModel::setTableRow(std::string table, std::string id, std::map<std::string, std::string> &array, int expire)
-{
-    // 设置数据
-    std::string key = table + ":" + id;
-    std::string cmd = "HMSET " + key;
-    for (std::map<std::string, std::string>::iterator it = array.begin(); it != array.end(); ++it) {
-        std::string key = it->first;
-        std::string val = it->second;
-        val = easycpp::helpers::str_replace(" ", "", val);
-        cmd = cmd + " " + key + " " + val;
-    }
-    redisReply* reply = (redisReply*)redisCommand(conn, cmd.c_str());
-    // 重要错误, redis需重新连接
-    if(reply == NULL){
-        throw easycpp::libraries::Exception("redis cmd failed, please connect again; ");
-    }
-    int reply_type = reply->type;
-    freeReplyObject(reply);
-    // 返回状态
-    if (reply_type == REDIS_REPLY_ERROR) {
-        return false;
-    }
-    // 设置有效时间(秒)
-    setExpire(key, expire);
     // 返回状态
     return true;
 }
@@ -243,9 +192,6 @@ void easycpp::models::RedisModel::closeConn()
 /// 设置有效时间
 bool easycpp::models::RedisModel::setExpire(std::string key, int expire)
 {
-    if(expire == -1){
-        return false;
-    }
     // 设置
     std::string cmd = "EXPIRE " + key + " " + easycpp::helpers::strval(expire);
     redisReply* reply = (redisReply*)redisCommand(conn, cmd.c_str());

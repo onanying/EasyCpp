@@ -232,21 +232,17 @@ using namespace std;
 
 int main()
 {
-    // 生成 URL-encode 之后的请求字符串
-    libraries::JsonObject json;
-    string form_data;
+    // 构建要post的数据
+    libraries::JsonObject form_data;
     try{
-        json = helpers::json_init("{\"name\":\"xiaohua\",\"sex\":\"0\"}");
-        form_data = helpers::http_build_query(json);
-        cout << "URLencode String:\n" << form_data << endl;
+        form_data = helpers::json_init("{\"name\":\"小花\",\"sex\":\"0\"}");
     } catch (std::exception &ex){
         cout << ex.what() << endl;
         return 1;
     }
-
     // post请求
     string reponse_data;
-    int status = helpers::http_post("http://8.8.8.8:8888/test.php?token=123456", form_data, reponse_data);
+    int status = helpers::http_post("http://114.119.4.5:8888/test.php?token=123456", form_data, reponse_data);
     if(status == 0){
         cout << "Success:\n" << reponse_data << endl;
     }else{
@@ -255,7 +251,7 @@ int main()
 
     // get请求
     string reponse_data2;
-    int status2 = helpers::http_get("http://8.8.8.8:8888/test.php?token=123456", reponse_data2, 60); // 60秒后超时, 默认30秒
+    int status2 = helpers::http_get("http://114.119.4.5:8888/test.php?token=123456", reponse_data2, 60); // 60秒后超时, 默认30秒
     if(status2 == 0){
         cout << "Success:\n" << reponse_data2 << endl;
     }else{
@@ -292,6 +288,7 @@ int main()
         // 连接redis
         models::RedisModel redis("127.0.0.1", 6379, "123456");
 
+	/* string类型 */
         // 设置string
         redis.setString("token", "b12cc6c0cc5b4875af4b1334ceac782b10");
         // 设置string (带有效期)
@@ -300,36 +297,23 @@ int main()
         string s1 = redis.getString("token");
         cout << "token: " << s1 << endl;
 
+	/* Hash类型 */
         // 赋值
         map<string, string> array;
         array["name"] = "xiaohua";
         array["height"] = "176";
-        // 设置array
-        redis.setArray("user", array);
-        // 设置array (带有效期)
-        redis.setArray("user", array, 60);
-        // 获取array
-        map<string, string> *array1 = redis.getArray("user");
+        // 设置Hash
+        redis.setHash("user", array);
+        // 设置Hash (带有效期)
+        redis.setHash("user", array, 60);
+        // 获取Hash
+        map<string, string> *array1 = redis.getHash("user");
         for (map<string, string>::iterator it = array1->begin(); it != array1->end(); ++it) {
             cout << "array key: " << it->first << endl;
             cout << "array val: " << it->second << endl;
         }
 
-        // 赋值
-        map<string, string> row;
-        row["name"] = "xiaohua";
-        row["height"] = "176";
-        // 设置table的一行
-        redis.setTableRow("user", "1", row);
-        // 设置table的一行 (带有效期)
-        redis.setTableRow("user", "1", row, 60);
-        // 获取table的一行
-        map<string, string> *array2 = redis.getTableRow("user", "1");
-        for (map<string, string>::iterator it = array2->begin(); it != array2->end(); ++it) {
-            cout << "row key: " << it->first << endl;
-            cout << "row val: " << it->second << endl;
-        }
-
+	/* List类型 */
         // 插入列表头部
         redis.pushList("queue_user", "update_xiaohua_info");
         redis.pushList("queue_user", "insert_xiaohua_info");
