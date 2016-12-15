@@ -242,7 +242,7 @@ int main()
     }
     // post请求
     string reponse_data;
-    int status = helpers::http_post("http://114.119.4.5:8888/test.php?token=123456", form_data, reponse_data);
+    int status = helpers::http_post("http://0.0.0.0:8888/test.php?token=123456", form_data, reponse_data);
     if(status == 0){
         cout << "Success:\n" << reponse_data << endl;
     }else{
@@ -251,7 +251,7 @@ int main()
 
     // get请求
     string reponse_data2;
-    int status2 = helpers::http_get("http://114.119.4.5:8888/test.php?token=123456", reponse_data2, 60); // 60秒后超时, 默认30秒
+    int status2 = helpers::http_get("http://0.0.0.0:8888/test.php?token=123456", reponse_data2, 60); // 60秒后超时, 默认30秒
     if(status2 == 0){
         cout << "Success:\n" << reponse_data2 << endl;
     }else{
