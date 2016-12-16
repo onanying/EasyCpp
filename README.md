@@ -32,7 +32,37 @@ make install
     easycpp/libraries/exception.h
     easycpp/libraries/json.h
     easycpp/models/redis.h
-    
+
+## 函数列表 (function)
+
+> datetime
+> date
+> timestamp
+> file_put_contents
+> file_get_contents
+> file_exists
+> dirname
+> basename
+> mkdir
+> http_post
+> http_get
+> urlencode
+> urldecode
+> http_build_query
+> json_init
+> json_get_array
+> json_get_object
+> json_get_string
+> json_get_int
+> log_error
+> log_debug
+> log_info
+> str_replace
+> explode
+> implode
+> strval
+> intval
+
 ## 使用范例 (sample)
 
 ```cpp
@@ -110,6 +140,20 @@ int main()
     // 文件读取
     string s2 = helpers::file_get_contents("test.txt");
 
+    // 判断文件存在
+    if(file_exists(file)){
+	// 存在
+    }
+
+    // 返回路径中的目录部分
+    std::string path = helpers::dirname("log/info.log");
+
+    // 返回路径中的文件名部分
+    std::string path = helpers::basename("log/info.log");
+
+    // 创建目录
+    helpers::mkdir("log/2016");
+
     return 0;
 }
 ```
@@ -132,13 +176,13 @@ int main()
     string tag = "send_error";
     string msg = "uid[123],name[哈哈],sex[0]";
 
-    // 错误日志， 写入到文件 error.log
+    // 错误日志， 写入到文件 log/error.log
     helpers::log_error(tag, msg);
 
-    // 信息日志， 写入到文件 info.log
+    // 信息日志， 写入到文件 log/info.log
     helpers::log_info(tag, msg);
 
-    // 调试日志， 写入到文件 debug.log
+    // 调试日志， 写入到文件 log/debug.log
     helpers::log_debug(tag, msg);
 
     return 0;

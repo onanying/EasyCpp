@@ -45,3 +45,15 @@ std::vector<std::string> easycpp::helpers::explode(const std::string separator, 
     }
     return array;
 }
+
+/// 把数组元素组合为字符串
+std::string easycpp::helpers::implode(std::string separator, std::vector<std::string> array)
+{
+    std::string str;
+    int size = array.size();
+    for(int i = 0; i<size; i++){
+        std::string item = array.at(i);
+        str += separator + item.c_str();
+    }
+    return str.substr(1, str.size());
+}

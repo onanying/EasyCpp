@@ -44,14 +44,14 @@ namespace helpers {
 
             // 状态码非200, 不支持301/302等跳转
             if (status_code != "200") {
-                reponse_data = "Response returned with status code != 200 " ;
-                return easycpp::helpers::intval(status_code);
+                reponse_data = "HTTP Status Code: " + status_code;
             }
+
+            return easycpp::helpers::intval(status_code);
         } catch(std::exception& e) {
             reponse_data = e.what();
             return -2;
         }
-        return 0;
     }
 
     /// POST请求(重载)
@@ -121,14 +121,14 @@ namespace helpers {
 
             // 状态码非200, 不支持301/302等跳转
             if (status_code != "200") {
-                reponse_data = "Response returned with status code != 200 " ;
-                return easycpp::helpers::intval(status_code);
+                reponse_data = "HTTP Status Code: " + status_code;
             }
+
+            return easycpp::helpers::intval(status_code);
         } catch(std::exception& e) {
             reponse_data = e.what();
             return -2;
         }
-        return 0;
     }
 
     /// GET请求(重载)

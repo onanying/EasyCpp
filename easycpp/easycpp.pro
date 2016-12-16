@@ -29,7 +29,7 @@ SOURCES += \
 
 
 INCLUDEPATH += /usr/local/include/
-LIBS += -lboost_system -lhiredis -levent
+LIBS += -lboost_system -lhiredis -levent -lboost_filesystem
 
 HEADERS += \
     easycpp/helpers/string.h \
