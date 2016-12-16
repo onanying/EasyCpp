@@ -35,35 +35,37 @@ make install
 
 ## 函数列表 (function)
 
-> datetime
-> date
-> timestamp
-> file_put_contents
-> file_get_contents
-> file_exists
-> dirname
-> basename
-> mkdir
-> http_post
-> http_get
-> urlencode
-> urldecode
-> http_build_query
-> json_init
-> json_get_array
-> json_get_object
-> json_get_string
-> json_get_int
-> log_error
-> log_debug
-> log_info
-> str_replace
-> explode
-> implode
-> strval
-> intval
+- datetime
+- date
+- timestamp
+- file_put_contents
+- file_get_contents
+- file_exists
+- dirname
+- basename
+- mkdir
+- http_post
+- http_get
+- urlencode
+- urldecode
+- http_build_query
+- json_init
+- json_get_array
+- json_get_object
+- json_get_string
+- json_get_int
+- log_error
+- log_debug
+- log_info
+- str_replace
+- explode
+- implode
+- strval
+- intval
 
 ## 使用范例 (sample)
+
+### 字符串辅助函数
 
 ```cpp
 /**
@@ -91,6 +93,7 @@ int main()
     return 0;
 }
 ```
+### 日期时间辅助函数
 
 ```cpp
 /**
@@ -118,6 +121,7 @@ int main()
     return 0;
 }
 ```
+### 文件辅助函数
 
 ```cpp
 /**
@@ -157,6 +161,7 @@ int main()
     return 0;
 }
 ```
+### 日志辅助函数
 
 ```cpp
 /**
@@ -188,6 +193,7 @@ int main()
     return 0;
 }
 ```
+### 类型转换辅助函数
 
 ```cpp
 /**
@@ -212,6 +218,7 @@ int main()
     return 0;
 }
 ```
+### json辅助函数
 
 ```cpp
 /**
@@ -262,6 +269,7 @@ int main()
     return 0;
 }
 ```
+### http辅助函数
 
 ```cpp
 /**
@@ -312,10 +320,11 @@ int main()
     return 0;
 }
 ```
+### redis模型
 
 ```cpp
 /**
- * redis 模型
+ * redis模型
  */
 #include <iostream>
 #include <string>
