@@ -7,6 +7,7 @@
 #define EASYCPP_HELPERS_DATETIME_INCLUDED
 
 #include <iostream>
+#include <time.h>
 #include <string>
 
 namespace easycpp {
@@ -16,7 +17,7 @@ namespace helpers {
     std::string date(std::string format, long timestamp = -1);
 
     /// 获取当前时间戳
-    long time();
+    long timestamp();
 
 }
 }

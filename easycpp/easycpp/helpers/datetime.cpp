@@ -8,7 +8,6 @@
 /// 获取当前日期
 std::string easycpp::helpers::date(std::string format, long timestamp)
 {
-
     time_t t = (timestamp == -1 ? time(0) : timestamp);
     char tmp[50];
     strftime(tmp, sizeof(tmp), format.c_str(), localtime(&t));
@@ -16,7 +15,7 @@ std::string easycpp::helpers::date(std::string format, long timestamp)
 }
 
 /// 获取当前时间戳
-long easycpp::helpers::time(){
+long easycpp::helpers::timestamp(){
     time_t rawtime;
     return time(&rawtime);
 }

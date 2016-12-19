@@ -36,7 +36,7 @@ make install
 ## 函数列表 (function)
 
 - date
-- time
+- timestamp
 - file_put_contents
 - file_get_contents
 - file_exists
@@ -115,7 +115,7 @@ int main()
     string date = helpers::date("%Y-%m-%d");
     
     // 获取当前时间戳
-    long time = helpers::time();
+    long time = helpers::timestamp();
 
     return 0;
 }
