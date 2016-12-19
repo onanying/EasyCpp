@@ -4,12 +4,11 @@
 #include <easycpp/helpers/log.h>
 #include <easycpp/helpers/type.h>
 #include <easycpp/helpers/json.h>
+#include <easycpp/helpers/http.h>
 
 #include <vector>
-
 #include <iostream>
 #include <string>
-#include <easycpp/helpers/http.h>
 
 using namespace easycpp;
 using namespace std;
@@ -17,9 +16,7 @@ using namespace std;
 int main()
 {
 
-    helpers::log_info("test", "dfsdfsdfsdf");
-    helpers::log_error("test", "dfsdfsdfsdf");
-    helpers::log_debug("test", "dfsdfsdfsdf");
+
 
     return 0;
 }

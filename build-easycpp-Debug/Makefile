@@ -15,7 +15,7 @@ CXXFLAGS      = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I/usr/local/include -I. -I../easycpp -I.
 LINK          = g++
 LFLAGS        = -m64 -shared -Wl,-soname,libeasycpp.so.1
-LIBS          = $(SUBLIBS) -lboost_system -lhiredis -levent -lpthread 
+LIBS          = $(SUBLIBS) -lboost_system -lhiredis -levent 
 AR            = ar cqs
 RANLIB        = 
 TAR           = tar -cf
@@ -100,9 +100,6 @@ $(TARGET):  $(OBJECTS) $(SUBLIBS) $(OBJCOMP)
 	-ln -s $(TARGET) $(TARGET0)
 	-ln -s $(TARGET) $(TARGET1)
 	-ln -s $(TARGET) $(TARGET2)
-	{ test -z "$(DESTDIR)" || cd "$(DESTDIR)"; } && test $$(gdb --version | sed -e 's,[^0-9][^0-9]*\([0-9]\)\.\([0-9]\).*,\1\2,;q') -gt 72 && gdb --nx --batch --quiet -ex 'set confirm off' -ex "save gdb-index ." -ex quit '$(TARGET)' && test -f $(TARGET).gdb-index && objcopy --add-section '.gdb_index=$(TARGET).gdb-index' --set-section-flags '.gdb_index=readonly' '$(TARGET)' '$(TARGET)' && rm -f $(TARGET).gdb-index || true
-
-
 
 staticlib: $(TARGETA)
 
@@ -184,6 +181,7 @@ install:
 uninstall:   FORCE
 
 FORCE:
+
 
 
 

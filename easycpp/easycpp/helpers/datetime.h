@@ -12,14 +12,11 @@
 namespace easycpp {
 namespace helpers {
 
-    /// 获取当前日期时间
-    std::string datetime();
-
     /// 获取当前日期
-    std::string date();
+    std::string date(std::string format, long timestamp = -1);
 
     /// 获取当前时间戳
-    long timestamp();
+    long time();
 
 }
 }

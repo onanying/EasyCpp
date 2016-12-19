@@ -35,9 +35,8 @@ make install
 
 ## 函数列表 (function)
 
-- datetime
 - date
-- timestamp
+- time
 - file_put_contents
 - file_get_contents
 - file_exists
@@ -110,13 +109,13 @@ int main()
 {
 
     // 获取当前日期时间
-    string datetime = helpers::datetime();
+    string datetime = helpers::date("%Y/%m/%d %X");
 
     // 获取当前日期
-    string date = helpers::date();
+    string date = helpers::date("%Y-%m-%d");
     
     // 获取当前时间戳
-    long time = helpers::timestamp();
+    long time = helpers::time();
 
     return 0;
 }
@@ -181,14 +180,17 @@ int main()
     string tag = "send_error";
     string msg = "uid[123],name[哈哈],sex[0]";
 
-    // 错误日志， 写入到文件 log/error.log
+    // 错误日志， 写入到文件 log/error.20161219.log
     helpers::log_error(tag, msg);
 
-    // 信息日志， 写入到文件 log/info.log
+    // 信息日志， 写入到文件 log/info.20161219.log
     helpers::log_info(tag, msg);
 
-    // 调试日志， 写入到文件 log/debug.log
+    // 调试日志， 写入到文件 log/debug.20161219.log
     helpers::log_debug(tag, msg);
+
+    // 带子目录， 写入到文件 log/2016/debug.20161219.log
+    helpers::log_debug(tag, msg, "2016");
 
     return 0;
 }
