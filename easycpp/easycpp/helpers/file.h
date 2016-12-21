@@ -37,6 +37,9 @@ namespace helpers {
     /// 创建目录
     void mkdir(std::string path);
 
+    /// 返回目录中的所有文件的文件名
+    std::vector<std::string> readdir(std::string path);
+
 }
 }
 

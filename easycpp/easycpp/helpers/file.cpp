@@ -91,3 +91,19 @@ void easycpp::helpers::mkdir(std::string path)
     // 恢复默认当前目录
     boost::filesystem::current_path(current_path);
 }
+
+/// 返回目录中的所有文件的文件名
+std::vector<std::string> easycpp::helpers::readdir(std::string path)
+{
+    std::vector<std::string> filenames;
+    boost::filesystem::path dirPath(path);
+    if (boost::filesystem::exists(dirPath)) {
+        boost::filesystem::directory_iterator end_iter;
+        for (boost::filesystem::directory_iterator iter(dirPath); iter!=end_iter; ++iter) {
+            if (boost::filesystem::is_regular_file(iter->status())) {
+                filenames.push_back(iter->path().string());
+            }
+        }
+    }
+    return filenames;
+}

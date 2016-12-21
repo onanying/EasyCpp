@@ -43,6 +43,7 @@ make install
 - dirname
 - basename
 - mkdir
+- readdir
 - http_post
 - http_get
 - urlencode
@@ -156,6 +157,9 @@ int main()
 
     // 创建目录
     helpers::mkdir("log/2016");
+
+    // 返回目录中的所有文件的文件名
+    vector<string> filenames = helpers::readdir("cache");
 
     return 0;
 }
